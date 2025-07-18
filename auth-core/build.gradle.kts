@@ -15,7 +15,6 @@ repositories {
 }
 
 dependencies {
-    api(project(":auth-api"))
     api("org.springframework.boot:spring-boot-starter-security")
     api("org.springframework.boot:spring-boot-starter-web")
     api("com.github.ben-manes.caffeine:caffeine")

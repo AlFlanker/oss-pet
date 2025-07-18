@@ -2,18 +2,13 @@ package com.otr.authcore;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.otr.authapi.AuthClient;
-import com.otr.authapi.ExternalUserDto;
-import org.springframework.stereotype.Service;
 
-
-@Service
 public class AuthService {
 
-    private final AuthClient client;
+    private final AuthApi client;
     private final Cache<String, AuthInfo> cache;
 
-    public AuthService(AuthClient client, AuthProperties properties) {
+    public AuthService(AuthApi client, AuthProperties properties) {
         this.client = client;
         this.cache = Caffeine.newBuilder()
                 .expireAfterWrite(properties.getCacheTtl())
@@ -25,7 +20,6 @@ public class AuthService {
     }
 
     private AuthInfo load(String header) {
-        ExternalUserDto dto = client.authenticate(header);
-        return new AuthInfo(dto.getUsername(), dto.getOrganization(), dto.getDocumentTypes());
+        return client.authenticate(header);
     }
 }

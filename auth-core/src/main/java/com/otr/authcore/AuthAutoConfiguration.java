@@ -1,6 +1,5 @@
 package com.otr.authcore;
 
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +12,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableConfigurationProperties(AuthProperties.class)
-@ImportAutoConfiguration(com.otr.authapi.AuthApiConfiguration.class)
 public class AuthAutoConfiguration {
 
+    @Bean
+    @ConditionalOnMissingBean
+    public AuthService authService(AuthApi api, AuthProperties properties) {
+        return new AuthService(api, properties);
+    }
     @Bean
     @ConditionalOnMissingBean
     public ExternalAuthProvider externalAuthProvider(AuthService service) {

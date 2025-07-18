@@ -16,6 +16,7 @@ repositories {
 
 dependencies {
     api("org.springframework.cloud:spring-cloud-starter-openfeign")
+    api(project(":auth-core"))
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 }
